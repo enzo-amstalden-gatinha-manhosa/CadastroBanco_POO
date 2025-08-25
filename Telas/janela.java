@@ -1,17 +1,20 @@
 package Telas;
 
 import javax.swing.*; // Componentes swing
+import javax.swing.text.MaskFormatter;
+
 import Funcoes.CadastroFuncoes; // Funções dos botões
 import java.awt.*; // Importa o Layout
+import java.text.ParseException;
 
 public class janela extends JFrame {
     private JLabel jlAgencia, jlConta, jlNome, jlEndereco, jlTelefone, jlCpf; // Títulos
-    private JTextField jtfAgencia, jtfConta, jtfNome, jtfEndereco, jtfTelefone, jtfCpf; // Entrada de texto
+    private JTextField jtfAgencia, jtfConta, jtfNome, jtfEndereco; // Entrada de texto
     private JSeparator jSeparator01, jSeparator02; // Linhas de separação
     private JRadioButton jrbCorrente, jrbPoupanca; // Botõoes de opção
     private ButtonGroup bgContas; // Agrupamento dos radio buttons, para que só um seja selecionado
     private JButton jbConsultar, jbAtualizar, jbFechar; // Ações
-
+    private JFormattedTextField jtfTelefone, jtfCpf; // Texto com máscara
     public static void main(String args []) {
         janela janela = new janela();
         janela.setVisible(true);
@@ -90,21 +93,35 @@ public class janela extends JFrame {
         jlTelefone = new JLabel("Telefone:");
         jlTelefone.setBounds(10, 100, 60, 18);
         jlTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
-        getContentPane().add(jlTelefone);
+        try {
+            MaskFormatter mask = new MaskFormatter("(##)#####-####");
+             mask.setPlaceholderCharacter('_');
 
-        jtfTelefone = new JTextField();
-        jtfTelefone.setBounds(75, 100, 300, 20);
-        getContentPane().add(jtfTelefone);
+            jtfTelefone = new JFormattedTextField(mask);
+            jtfTelefone.setBounds(75, 100, 300, 20);
+            jtfTelefone.setColumns(12);
+            getContentPane().add(jlTelefone);
+            getContentPane().add(jtfTelefone);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
 
         // CPF
         jlCpf = new JLabel("CPF:");
         jlCpf.setBounds(10, 125, 60, 18);
         jlCpf.setHorizontalAlignment(SwingConstants.RIGHT);
         getContentPane().add(jlCpf);
+        try {
+            MaskFormatter mask1 = new MaskFormatter("###.###.###-##");
+            mask1.setPlaceholderCharacter('_');
 
-        jtfCpf = new JTextField();
-        jtfCpf.setBounds(75, 125, 300, 20);
-        getContentPane().add(jtfCpf);
+            jtfCpf = new JFormattedTextField(mask1);
+            jtfCpf.setBounds(75, 125, 300, 20);
+            getContentPane().add(jtfCpf);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // RadioButtons
         jrbCorrente = new JRadioButton("Conta Corrente");
@@ -151,5 +168,37 @@ public class janela extends JFrame {
     public JButton getBtnConsultar() { return jbConsultar; }
     public JButton getBtnAtualizar() { return jbAtualizar; }
     public JButton getBtnFechar() { return jbFechar; }
+
+    public String getAgencia() {
+    return jtfAgencia.getText();
+    }
+
+    public String getConta() {
+        return jtfConta.getText();
+    }
+
+    public String getNome() {
+        return jtfNome.getText();
+    }
+
+    public String getEndereco() {
+        return jtfEndereco.getText();
+    }
+
+    public String getTelefone() {
+        return jtfTelefone.getText();
+    }
+
+    public String getCpf() {
+        return jtfCpf.getText();
+    }
+
+    public String getTipoConta() {
+        if (jrbCorrente.isSelected()) {
+            return "Conta Corrente";
+        } else {
+            return "Conta Poupança";
+        }
+    }
 
 }

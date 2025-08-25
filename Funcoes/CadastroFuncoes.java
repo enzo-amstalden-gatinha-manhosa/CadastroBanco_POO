@@ -20,8 +20,22 @@ public class CadastroFuncoes {
 
     private void consultar() {
         cliente.gravar();
-        JOptionPane.showMessageDialog(janela, "Consultando cliente...");
-    }
+        String dados = "Agência: " + janela.getAgencia() + "\n" +
+            "Conta: " + janela.getConta() + "\n" +
+            "Nome: " + janela.getNome() + "\n" +
+            "Endereço: " + janela.getEndereco() + "\n" +
+            "Telefone: " + janela.getTelefone() + "\n" +
+            "CPF: " + janela.getCpf() + "\n" +
+            "Tipo de Conta: " + janela.getTipoConta();
+        if (janela.getAgencia().isEmpty() || janela.getConta().isEmpty() || janela.getNome().isEmpty() || janela.getEndereco().isEmpty() || janela.getTelefone().isEmpty() || janela.getCpf().isEmpty() || janela.getTipoConta().isEmpty()){
+            JOptionPane.showMessageDialog(janela,
+            "Preencha todos os campos!",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+        } else {
+        JOptionPane.showMessageDialog(janela, dados, "Dados do Cliente", JOptionPane.INFORMATION_MESSAGE);
+        }
+}
 
     private void atualizar() {
         cliente.editar();
@@ -31,4 +45,5 @@ public class CadastroFuncoes {
     private void fechar() {
         janela.dispose();
     }
+    
 }
